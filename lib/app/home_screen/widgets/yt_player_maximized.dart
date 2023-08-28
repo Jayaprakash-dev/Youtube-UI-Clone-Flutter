@@ -73,7 +73,6 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
           child: Stack(
             children: [
               YoutubePlayerWrapper(
-                playerWidth: double.infinity,
                 controller: widget.ytPlayerController,
               ),
               GestureDetector(

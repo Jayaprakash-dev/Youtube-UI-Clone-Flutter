@@ -35,19 +35,16 @@ class _YoutubePlayerMinimizedViewState extends State<YoutubePlayerMinimizedView>
       child: Flex(
         direction: Axis.horizontal,
         children: [
-          Flexible(
-            flex: 3,
-            fit: FlexFit.tight,
+          Expanded(
             child: ClipRRect(
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(13), bottomLeft: Radius.circular(13)),
               child: YoutubePlayerWrapper(
-                playerWidth: widget.playerWidth,
                 controller: widget.controller,
               ),
             ),
           ),
           Flexible(
-            flex: 5,
+            flex: 2,
             child: Container(
               padding: const  EdgeInsets.only(top: 12, left: 10, bottom: 4, right: 5),
               width: MediaQuery.of(context).size.width - 50,
@@ -65,7 +62,7 @@ class _YoutubePlayerMinimizedViewState extends State<YoutubePlayerMinimizedView>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width - 240,
+                          width: MediaQuery.of(context).size.width - 200,
                           child: Text(
                             widget.activeVideo.title!,
                             maxLines: 1,
