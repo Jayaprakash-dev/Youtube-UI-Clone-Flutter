@@ -1,0 +1,398 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:395533052049447176",
+      "lastPropertyId": "6:557320144716966433",
+      "name": "ChannelEntity",
+      "properties": [
+        {
+          "id": "1:1872980094411305593",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:783636391026967315",
+          "name": "channelId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "1:6132637431697581214"
+        },
+        {
+          "id": "3:8298914774298321116",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:622222188781833625",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "5:19762219028209866",
+          "name": "url",
+          "type": 9
+        },
+        {
+          "id": "6:557320144716966433",
+          "name": "statisticsId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:7003046303880723593",
+          "relationTarget": "ChannelStatisticsEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:5980368362347368824",
+      "lastPropertyId": "5:5722925173659604157",
+      "name": "ChannelStatisticsEntity",
+      "properties": [
+        {
+          "id": "1:8606558814731453519",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3204520865838749157",
+          "name": "viewCount",
+          "type": 9
+        },
+        {
+          "id": "3:6316185707642222444",
+          "name": "subscriberCount",
+          "type": 9
+        },
+        {
+          "id": "4:5686119806764714625",
+          "name": "videoCount",
+          "type": 9
+        },
+        {
+          "id": "5:5722925173659604157",
+          "name": "channelId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:2364518734982623365",
+          "relationTarget": "ChannelEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:4874715100023080694",
+      "lastPropertyId": "5:7106468921754757799",
+      "name": "VideoContentDetailsEntity",
+      "properties": [
+        {
+          "id": "1:5675115567392610083",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:615837346095707845",
+          "name": "duration",
+          "type": 9
+        },
+        {
+          "id": "3:4755683331182917767",
+          "name": "definition",
+          "type": 9
+        },
+        {
+          "id": "4:3686190699019387219",
+          "name": "caption",
+          "type": 9
+        },
+        {
+          "id": "5:7106468921754757799",
+          "name": "videoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:5736518650661460357",
+          "relationTarget": "VideoEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:6412710220074838233",
+      "lastPropertyId": "13:4595816395819612266",
+      "name": "VideoEntity",
+      "properties": [
+        {
+          "id": "1:2295269119556085421",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2001425405748804496",
+          "name": "videoId",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "6:7703029662671017620"
+        },
+        {
+          "id": "3:2855867379896922617",
+          "name": "videoType",
+          "type": 9
+        },
+        {
+          "id": "4:5097155218732119959",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "5:5260084667934511751",
+          "name": "channelId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "24:6425763708643273090",
+          "relationTarget": "ChannelEntity"
+        },
+        {
+          "id": "6:4714573876050751978",
+          "name": "channelTitle",
+          "type": 9
+        },
+        {
+          "id": "7:5696167950807212239",
+          "name": "desc",
+          "type": 9
+        },
+        {
+          "id": "8:9132898100832929746",
+          "name": "categoryId",
+          "type": 9
+        },
+        {
+          "id": "9:5621773125881666609",
+          "name": "lang",
+          "type": 9
+        },
+        {
+          "id": "10:5513585809398616147",
+          "name": "publishedAt",
+          "type": 10
+        },
+        {
+          "id": "11:8522252441770609811",
+          "name": "tags",
+          "type": 30
+        },
+        {
+          "id": "12:3625086573175491211",
+          "name": "statisticsId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "7:1879433903388552112",
+          "relationTarget": "VideoStatisticsEntity"
+        },
+        {
+          "id": "13:4595816395819612266",
+          "name": "contentDetailsId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "8:9198389954872383501",
+          "relationTarget": "VideoContentDetailsEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:992379462940231714",
+      "lastPropertyId": "5:5655891754605000969",
+      "name": "VideoStatisticsEntity",
+      "properties": [
+        {
+          "id": "1:3212421722128892523",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:721410184725102789",
+          "name": "viewCount",
+          "type": 9
+        },
+        {
+          "id": "3:5451646047414482304",
+          "name": "likeCount",
+          "type": 9
+        },
+        {
+          "id": "4:3893306026178762508",
+          "name": "commentCount",
+          "type": 9
+        },
+        {
+          "id": "5:5655891754605000969",
+          "name": "videoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "10:1757407689420265341",
+          "relationTarget": "VideoEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:4135051732673411645",
+      "lastPropertyId": "6:2675146515005699209",
+      "name": "VideoThumbnail",
+      "properties": [
+        {
+          "id": "1:1094140964158846568",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7307102654517610299",
+          "name": "videoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "12:1095660735871581849",
+          "relationTarget": "VideoEntity"
+        },
+        {
+          "id": "3:5231506628671991943",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "4:1153720904650329815",
+          "name": "url",
+          "type": 9
+        },
+        {
+          "id": "5:826411195999340725",
+          "name": "width",
+          "type": 6
+        },
+        {
+          "id": "6:2675146515005699209",
+          "name": "height",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:1520987344304325050",
+      "lastPropertyId": "6:7050207956966167932",
+      "name": "ChannelThumbnail",
+      "properties": [
+        {
+          "id": "1:7281425035534964324",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6819736257400604794",
+          "name": "channelId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "15:4280033934498394347",
+          "relationTarget": "ChannelEntity"
+        },
+        {
+          "id": "3:7980074823299147444",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "4:6826251208477608378",
+          "name": "url",
+          "type": 9
+        },
+        {
+          "id": "5:3042109691764577708",
+          "name": "width",
+          "type": 6
+        },
+        {
+          "id": "6:7050207956966167932",
+          "name": "height",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:9006153385023280427",
+      "lastPropertyId": "5:2464944788876211737",
+      "name": "Thumbnail",
+      "properties": [
+        {
+          "id": "1:1432790398134354939",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6504232345896069420",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "3:8061866171967973739",
+          "name": "url",
+          "type": 9
+        },
+        {
+          "id": "4:3056776553557360965",
+          "name": "width",
+          "type": 6
+        },
+        {
+          "id": "5:2464944788876211737",
+          "name": "height",
+          "type": 6
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "9:9006153385023280427",
+  "lastIndexId": "24:6425763708643273090",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [
+    4182543461372979719
+  ],
+  "retiredIndexUids": [
+    6484378957072900295,
+    983218588743235157,
+    2512122887697712052,
+    1995932709500601161,
+    2390866782705729399,
+    7439421127070609083,
+    5596496861302554725,
+    1704631260274554470,
+    8030502506403660387,
+    111829985490166039,
+    8660334619719309593,
+    5974991244171163020
+  ],
+  "retiredPropertyUids": [
+    5775496642210698256,
+    2629745361287298697,
+    6951714621823370298,
+    6370059599006809008,
+    3723886416020595212,
+    1088306197640751423
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
