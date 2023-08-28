@@ -98,66 +98,64 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
     return _playingVideo
      ? AnimatedBuilder(
       animation: _dragHAnimationController,
-      builder: (context, _) => ValueListenableBuilder(
-        valueListenable: _heightNotifier,
-        builder: (context, value, _) {
-          return SafeArea(
-            bottom: false,
-            child: GestureDetector(
-              onPanStart: _dragStartEventhandler,
-              onPanUpdate: _dragUpdateEventHandler,
-              onPanEnd: _dragEndEventHandler,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                
-                    // yt player maximized view
-                    if (value > _miniplayerViewTransitionPoint) {
-                      return Container(
-                        color: const Color.fromRGBO(27, 28, 30, 1),
-                        width: double.infinity,
-                        height: _heightNotifier.value,
-                        child: YoutubePlayerMaximizedView(
-                          activeVideo: widget.activeVideo,
-                          ytPlayerController: _ytPlayerController,
-                          suggestionVideosList: widget.suggestionVideosList,
-                          dragStartCallback: _dragStartEventhandler,
-                          dragUpdateCallback: _dragUpdateEventHandler,
-                          dragEndCallback: _dragEndEventHandler,
-                        ),
-                      );
-                    }
+      builder: (context, _) => SafeArea(
+        bottom: false,
+        child: GestureDetector(
+          onPanStart: _dragStartEventhandler,
+          onPanUpdate: _dragUpdateEventHandler,
+          onPanEnd: _dragEndEventHandler,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: ValueListenableBuilder(
+              valueListenable: _heightNotifier,
+              builder: (context, value, _) => LayoutBuilder(
+                builder: (context, constraints) {
               
-                    // yt player minimized view
-                    else {
-                      return ValueListenableBuilder(
-                        valueListenable: _widthNotifier,
-                        child: bottomNavBarWidget,
-                        builder: (context, value, child) => Stack(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(left: 13, right: 13, bottom: 84),
-                              width: double.infinity,
-                              height: _heightNotifier.value,
-                              child: YoutubePlayerMinimizedView(
-                                activeVideo: widget.activeVideo,
-                                controller: _ytPlayerController,
-                                playerWidth: _widthNotifier.value,
-                                closeVideo: _closeActiveVideo,
-                              ),
-                            ),
-                            child!,
-                          ],
-                        ),
-                      );
-                    }
+                  // yt player maximized view
+                  if (value > _miniplayerViewTransitionPoint) {
+                    return Container(
+                      color: const Color.fromRGBO(27, 28, 30, 1),
+                      width: double.infinity,
+                      height: _heightNotifier.value,
+                      child: YoutubePlayerMaximizedView(
+                        activeVideo: widget.activeVideo,
+                        ytPlayerController: _ytPlayerController,
+                        suggestionVideosList: widget.suggestionVideosList,
+                        dragStartCallback: _dragStartEventhandler,
+                        dragUpdateCallback: _dragUpdateEventHandler,
+                        dragEndCallback: _dragEndEventHandler,
+                      ),
+                    );
                   }
-                ),
+                      
+                  // yt player minimized view
+                  else {
+                    return ValueListenableBuilder(
+                      valueListenable: _widthNotifier,
+                      child: bottomNavBarWidget,
+                      builder: (context, value, child) => Stack(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(left: 13, right: 13, bottom: 84),
+                            width: double.infinity,
+                            height: _heightNotifier.value,
+                            child: YoutubePlayerMinimizedView(
+                              activeVideo: widget.activeVideo,
+                              controller: _ytPlayerController,
+                              playerWidth: _widthNotifier.value,
+                              closeVideo: _closeActiveVideo,
+                            ),
+                          ),
+                          child!,
+                        ],
+                      ),
+                    );
+                  }
+                }
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     )
     : const Stack(children: [ BottomNavBar(index: 0) ],);
