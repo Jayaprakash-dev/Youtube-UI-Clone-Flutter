@@ -49,6 +49,7 @@ app.*.map.json
 env.g.dart
 
 **.drawio
+.$ClassDiagram.drawio.bkp
 
 # macOS
 .DS_Store
