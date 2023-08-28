@@ -1,3 +1,3 @@
 # yt_ui_clone
 
-A new Flutter project.
+Flutter youtube ui clone
