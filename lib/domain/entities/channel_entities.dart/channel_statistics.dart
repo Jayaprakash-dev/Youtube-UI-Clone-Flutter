@@ -26,7 +26,7 @@ class ChannelStatisticsEntity {
     required this.videoCount,
   });
 
-  String parseCount(String val) {
+  String formatCount(String val) {
 
     double valAsNum = double.parse(val);
 

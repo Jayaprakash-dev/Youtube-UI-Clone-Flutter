@@ -209,7 +209,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                           children: [
                             // video views wrapper
                             Text(
-                              '${widget.activeVideo.statistics.target!.parseViewCount} views',
+                              '${widget.activeVideo.statistics.target!.formatViewCount} views',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w300
@@ -218,7 +218,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                             // video publised date wrapper
                             const SizedBox(width: 8,),
                             Text(
-                              widget.activeVideo.parsePublishedDate(),
+                              widget.activeVideo.formatPublishedDate(),
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w300
@@ -292,7 +292,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                                 Flexible(
                                   flex: 2,
                                   child: Text(
-                                    widget.activeVideo.channel.target!.statistics.target!.parseCount(
+                                    widget.activeVideo.channel.target!.statistics.target!.formatCount(
                                       widget.activeVideo.channel.target!.statistics.target!.subscriberCount
                                     ),
                                     style: const TextStyle(

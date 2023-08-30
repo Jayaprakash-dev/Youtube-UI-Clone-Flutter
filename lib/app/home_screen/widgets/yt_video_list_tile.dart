@@ -145,7 +145,7 @@ class YtVideoListTile extends StatelessWidget {
                         ),
                         SizedBox(width: 4.w,),
                         Text(
-                          video.statistics.target?.parseViewCount ?? '0K',
+                          video.statistics.target?.formatViewCount ?? '0K',
                           style: TextStyle(
                             //fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -158,7 +158,7 @@ class YtVideoListTile extends StatelessWidget {
                         ),
                         SizedBox(width: 4.w,),
                         Text(
-                          video.parsePublishedDate(),
+                          video.formatPublishedDate(),
                           style: TextStyle(
                             //fontSize: 16,
                             fontWeight: FontWeight.w500,

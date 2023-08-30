@@ -133,7 +133,7 @@ class VideoEntity extends Equatable {
     return false;
   }
 
-  String parsePublishedDate() {
+  String formatPublishedDate() {
 
     final Map<String, dynamic> publishedDateDiff = this.publishedDateDiff;
 

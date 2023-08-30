@@ -26,7 +26,7 @@ class VideoStatisticsEntity {
     required this.commentCount
   });
 
-  String get parseViewCount {
+  String get formatViewCount {
     if (viewCount == null) return '0';
 
     double viewCountParsed = double.parse(viewCount!);
