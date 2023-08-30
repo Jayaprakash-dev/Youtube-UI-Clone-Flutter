@@ -245,7 +245,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                         _expandedView = !_expandedView;
                       }),
                     ),
-                    const SizedBox(height: 14.0,),
+                    const SizedBox(height: 10.0,),
                     // channel info wrapper
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -273,50 +273,59 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                           ),
                           const SizedBox(width: 14),
                           Expanded(
-                            flex: 3,
-                            child: Row(
+                            child: Flex(
+                              mainAxisSize: MainAxisSize.max,
+                              direction: Axis.horizontal,
                               children: [
-                                Flexible(
+                                Expanded(
                                   flex: 5,
-                                  child: Text(
-                                    widget.activeVideo.channelTitle!,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        flex: 4,
+                                        child: Text(
+                                          widget.activeVideo.channelTitle!,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10,),
+                                      Flexible(
+                                        flex: 1,
+                                        child: Text(
+                                          widget.activeVideo.channel.target!.statistics.target!.formatCount(
+                                            widget.activeVideo.channel.target!.statistics.target!.subscriberCount
+                                          ),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w300
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: TextButton(
+                                      onPressed: () {},
+                                      child: const Text(
+                                        'Subscribe',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      )
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 10,),
-                                Flexible(
-                                  flex: 2,
-                                  child: Text(
-                                    widget.activeVideo.channel.target!.statistics.target!.formatCount(
-                                      widget.activeVideo.channel.target!.statistics.target!.subscriberCount
-                                    ),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w300
-                                    ),
-                                  ),
-                                )
                               ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Subscribe',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                  ),
-                                )
-                              ),
                             ),
                           ),
                         ],

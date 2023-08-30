@@ -103,71 +103,72 @@ class YtVideoListTile extends StatelessWidget {
                   },
                 ),
                 SizedBox(width: 10.w,),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: cWidth,
-                      child: Text(
-                        video.title!,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontFamily: 'YtSans',
-                          fontWeight: FontWeight.w700,
-                          color: const Color.fromARGB(220, 255, 255, 255),
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                    SizedBox(height: 7.h,),
-                    Row(
-                      children: [
-                        Text(
-                          video.channelTitle!.length > 17 
-                            ? 
-                            video.channelTitle!.substring(0, 16)
-                            :
-                            video.channelTitle!,
-                          maxLines: 1,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: cWidth,
+                        child: Text(
+                          video.title!,
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            //fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[600],
+                            fontSize: 18.sp,
+                            fontFamily: 'YtSans',
+                            fontWeight: FontWeight.w700,
+                            color: const Color.fromARGB(220, 255, 255, 255),
                           ),
+                          textAlign: TextAlign.left,
                         ),
-                        SizedBox(width: 4.w,),
-                        Center(
-                          child: Text('.', style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.w900),),
-                        ),
-                        SizedBox(width: 4.w,),
-                        Text(
-                          video.statistics.target?.formatViewCount ?? '0K',
-                          style: TextStyle(
-                            //fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[600],
+                      ),
+                      SizedBox(height: 7.h,),
+                      Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              video.channelTitle!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                //fontSize: 15.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey[600],
+                              ),
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 4.w,),
-                        Center(
-                          child: Text('.', style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.w900)),
-                        ),
-                        SizedBox(width: 4.w,),
-                        Text(
-                          video.formatPublishedDate(),
-                          style: TextStyle(
-                            //fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[600],
+                          SizedBox(width: 4.w,),
+                          Center(
+                            child: Text('.', style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.w900),),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
+                          SizedBox(width: 4.w,),
+                          Text(
+                            video.statistics.target?.formatViewCount ?? '0K',
+                            style: TextStyle(
+                              //fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                          SizedBox(width: 4.w,),
+                          Center(
+                            child: Text('.', style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.w900)),
+                          ),
+                          SizedBox(width: 4.w,),
+                          Text(
+                            video.formatPublishedDate(),
+                            style: TextStyle(
+                              //fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 //SizedBox(width: 5.w,),
                 const Icon(Icons.more_vert, color: Color.fromARGB(170, 255, 255, 255))

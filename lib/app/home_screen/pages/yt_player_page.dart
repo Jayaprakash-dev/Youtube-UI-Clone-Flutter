@@ -155,11 +155,12 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                       
                   // yt player minimized view
                   else {
-
                     if (!_isMinPlayerControllerInit || (widget.activeVideo.videoId != _prevActiveVideoId)) {
                       _isMaxPlayerControllerInit = false;
                       _isMinPlayerControllerInit = true;
                       _prevActiveVideoId = widget.activeVideo.videoId!;
+
+                      //_ytPlayerController.dispose();
 
                       _ytPlayerController = YoutubePlayerController(
                         initialVideoId: widget.activeVideo.videoId!,
