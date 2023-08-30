@@ -28,10 +28,10 @@ class VideoContentDetailsEntity {
 
     List<String?> durationInList = match.groups([1,2,3]);
 
-    return parseDuration(durationInList);
+    return formatDuration(durationInList);
   }
 
-  String? parseDuration(List<String?> durationInList) {
+  String? formatDuration(List<String?> durationInList) {
     String parsedDuration = '';
     
     for (int i = 0; i < durationInList.length; i++) {
@@ -40,13 +40,13 @@ class VideoContentDetailsEntity {
       if (current == null) continue;
 
       current = current.substring(0, current.length-1);
-      parsedDuration += parseCurrentSegment(str: current, isSec: i == durationInList.length-1 ? true : false);
+      parsedDuration += formatCurrentSegment(str: current, isSec: i == durationInList.length-1 ? true : false);
     }
 
     return  parsedDuration.isEmpty ? null : (parsedDuration.length <= 2 ? '0:$parsedDuration' : parsedDuration);
   }
 
-  String parseCurrentSegment({String? str, bool? isSec}) {
+  String formatCurrentSegment({String? str, bool? isSec}) {
     if (str!.length == 1) {
       return isSec! ? '0$str' : '$str:';
     }
