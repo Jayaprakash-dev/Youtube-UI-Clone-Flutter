@@ -46,7 +46,6 @@ class MainApp extends StatelessWidget {
     );
   }
 }
-//Size(430.0, 932.0)
 
 class BlocDelegate extends BlocObserver {
   @override
