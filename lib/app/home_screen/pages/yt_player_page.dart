@@ -296,6 +296,7 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
   void _loadVideo() {
     setState(() {
       _playingVideo = true;
+      _heightNotifier.value = widget.maxHeight;
     });
   }
 }
