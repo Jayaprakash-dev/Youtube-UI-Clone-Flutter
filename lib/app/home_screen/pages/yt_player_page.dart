@@ -51,13 +51,23 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
 
   static const _miniplayerViewTransitionPoint = 130;
 
+  final Widget bottomNavBarWidget = const BottomNavBar(index: 0);
+
   bool _playingVideo = true;
 
-  final Widget bottomNavBarWidget = const BottomNavBar(index: 0);
+  late String _prevActiveVideoId;
+
+  // there is no way to set player's 'hideControls' prop to false,
+  // so there will be two check statements to control the creation of a new player instance
+  late bool _isMaxPlayerControllerInit, _isMinPlayerControllerInit;
 
   @override
   void initState() {
     super.initState();
+
+    _isMaxPlayerControllerInit = true;
+    _isMinPlayerControllerInit = false;
+    _prevActiveVideoId = widget.activeVideo.videoId!;
 
     _ytPlayerController = YoutubePlayerController(
       initialVideoId: widget.activeVideo.videoId!,
@@ -113,6 +123,21 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
               
                   // yt player maximized view
                   if (value > _miniplayerViewTransitionPoint) {
+
+                    if (!_isMaxPlayerControllerInit || (widget.activeVideo.videoId != _prevActiveVideoId)) {
+                      _isMaxPlayerControllerInit = true;
+                      _isMinPlayerControllerInit = false;
+                      _prevActiveVideoId = widget.activeVideo.videoId!;
+
+                      _ytPlayerController = YoutubePlayerController(
+                        initialVideoId: widget.activeVideo.videoId!,
+                        flags: const YoutubePlayerFlags(
+                          autoPlay: true,
+                          mute: false,
+                        ),
+                      );
+                    }
+
                     return Container(
                       color: const Color.fromRGBO(27, 28, 30, 1),
                       width: double.infinity,
@@ -130,6 +155,22 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                       
                   // yt player minimized view
                   else {
+
+                    if (!_isMinPlayerControllerInit || (widget.activeVideo.videoId != _prevActiveVideoId)) {
+                      _isMaxPlayerControllerInit = false;
+                      _isMinPlayerControllerInit = true;
+                      _prevActiveVideoId = widget.activeVideo.videoId!;
+
+                      _ytPlayerController = YoutubePlayerController(
+                        initialVideoId: widget.activeVideo.videoId!,
+                        flags: const YoutubePlayerFlags(
+                          autoPlay: false,
+                          mute: false,
+                          hideControls: true,
+                        ),
+                      );
+                    }
+
                     return ValueListenableBuilder(
                       valueListenable: _widthNotifier,
                       child: bottomNavBarWidget,
@@ -224,20 +265,23 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
   void didUpdateWidget(covariant YoutubePlayerPage oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.activeVideo.videoId != widget.activeVideo.videoId) {
+    //if (oldWidget.activeVideo.videoId != widget.activeVideo.videoId) {
 
-      print('Player transitioning to new video ${widget.activeVideo.videoId!}');
+    //  print('Player transitioning to new video ${widget.activeVideo.videoId!}');
 
-      _ytPlayerController = YoutubePlayerController(
-        initialVideoId: widget.activeVideo.videoId!,
-        flags: const YoutubePlayerFlags(
-          autoPlay: true,
-          mute: false,
-        ),
-      );
+    //  _ytPlayerController.dispose();
 
-      _loadVideo();
-    } else if (!_playingVideo) {
+    //  _ytPlayerController = YoutubePlayerController(
+    //    initialVideoId: widget.activeVideo.videoId!,
+    //    flags: const YoutubePlayerFlags(
+    //      autoPlay: true,
+    //      mute: false,
+    //    ),
+    //  );
+
+    //  _loadVideo();
+    //} else 
+    if (!_playingVideo) {
       _loadVideo();
     }
   }

@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onRefresh: () async => BlocProvider.of<HomeBloc>(context).add(AppStarted()),
                   edgeOffset: 60.h,
                   backgroundColor: Colors.black,
-                  child: HomePage(videosList: state.videos!)
+                  child: HomePage(videosList: state.videos!, isRebuildReq: false)
                 ),
                 YoutubePlayerPage(
                   activeVideo: (state as HomeVideoPlayer).activeVideo,

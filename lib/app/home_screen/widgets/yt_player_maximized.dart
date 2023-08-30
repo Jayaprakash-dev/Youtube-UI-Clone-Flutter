@@ -41,27 +41,12 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
 
   bool _expandedView = false;
 
-  Widget _styleDescVideoInfo(String val, String text) {
-    return Column(
-      children: [
-        Text(
-          val,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 19,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          text,
-          style: const TextStyle(
-            color: Colors.grey,
-            fontSize: 14
-          ),
-        ),
-      ],
-    );
+  late Future<DataState<List<VideoEntity>>> _suggestionVideosList;
+
+  @override
+  void initState() {
+    super.initState();
+    _suggestionVideosList = widget.suggestionVideosList;
   }
 
   @override
@@ -195,7 +180,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
           fit: FlexFit.loose,
           // video info wrapper
           child: Container(
-            margin: const EdgeInsets.only(top: 8),
+            margin: const EdgeInsets.only(top: 4),
             width: double.infinity,
             height: double.infinity,
             child: CustomScrollView(
@@ -260,7 +245,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                         _expandedView = !_expandedView;
                       }),
                     ),
-                    const SizedBox(height: 6.0,),
+                    const SizedBox(height: 14.0,),
                     // channel info wrapper
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -286,29 +271,41 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                               }
                             },
                           ),
-                          const SizedBox(width: 14,),
-                          Row(
-                            children: [
-                              Text(
-                                widget.activeVideo.channelTitle!,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600
+                          const SizedBox(width: 14),
+                          Expanded(
+                            flex: 3,
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  flex: 5,
+                                  child: Text(
+                                    widget.activeVideo.channelTitle!,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 10,),
-                              Text(
-                                widget.activeVideo.channel.target!.statistics.target!.parseCount(
-                                  widget.activeVideo.channel.target!.statistics.target!.subscriberCount
-                                ),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w300
-                                ),
-                              )
-                            ],
+                                const SizedBox(width: 10,),
+                                Flexible(
+                                  flex: 2,
+                                  child: Text(
+                                    widget.activeVideo.channel.target!.statistics.target!.parseCount(
+                                      widget.activeVideo.channel.target!.statistics.target!.subscriberCount
+                                    ),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w300
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                           Expanded(
+                            flex: 2,
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: TextButton(
@@ -325,7 +322,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 20),
                     // video action buttons wrapper
                     Container(
                       margin: const EdgeInsets.only(left: 15, right: 15),
@@ -505,7 +502,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                 ),
               ),
               FutureBuilder(
-                key: ObjectKey(widget.suggestionVideosList.hashCode),
+                key: ObjectKey(_suggestionVideosList.hashCode),
                 future: widget.suggestionVideosList,
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data is DataSuccess) {
@@ -520,6 +517,29 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
               )
               ],
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _styleDescVideoInfo(String val, String text) {
+    return Column(
+      children: [
+        Text(
+          val,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 19,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          text,
+          style: const TextStyle(
+            color: Colors.grey,
+            fontSize: 14
           ),
         ),
       ],
@@ -584,8 +604,11 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
   @override
   void didUpdateWidget(covariant YoutubePlayerMaximizedView oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     if (oldWidget.activeVideo.videoId != widget.activeVideo.videoId) {
-      print('Rebuilding suggestion videos List');
+      print('Rebuilding suggestion videos List for \n'
+      'videoID: ${widget.activeVideo.videoId} \ncategoryID: ${widget.activeVideo.categoryId}');
+      _suggestionVideosList = widget.suggestionVideosList;
     }
   }
 }
