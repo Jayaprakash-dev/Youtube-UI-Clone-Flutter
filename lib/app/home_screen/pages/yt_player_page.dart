@@ -51,14 +51,16 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
 
   static const _miniplayerViewTransitionPoint = 130;
 
-  final Widget bottomNavBarWidget = const BottomNavBar(index: 0);
+  final Widget _bottomNavBarWidget = const BottomNavBar(index: 0);
 
   bool _playingVideo = true;
 
   late String _prevActiveVideoId;
 
-  // there is no way to set player's 'hideControls' prop to false,
-  // so there will be two check statements to control the creation of a new player instance
+  /// `YoutubePlayerController` lacks a dynamic control for changing player controls visibility.
+  /// To manage the visibility of controls in this scenario,
+  /// there needs to be two conditional statements to control the creation of a new `YoutubePlayerController` instance
+  /// based on the view.
   late bool _isMaxPlayerControllerInit, _isMinPlayerControllerInit;
 
   @override
@@ -88,8 +90,8 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
       duration: const Duration(milliseconds: 200),
     )..addListener(_dargAnimationListener);
     
-    // In this case, the aspect ratio is maintained by calculating the height to width
-    // it better suits for the animation
+    /// In this case, the aspect ratio is maintained by calculating the height to width
+    /// it better suits for the animation
     _aspectRatio = widget.maxHeight / widget.maxWidth;
   }
 
@@ -174,7 +176,7 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
 
                     return ValueListenableBuilder(
                       valueListenable: _widthNotifier,
-                      child: bottomNavBarWidget,
+                      child: _bottomNavBarWidget,
                       builder: (context, value, child) => Stack(
                         children: [
                           Container(
