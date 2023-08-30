@@ -63,6 +63,8 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
   /// based on the view.
   late bool _isMaxPlayerControllerInit, _isMinPlayerControllerInit;
 
+  Duration _playedDuration = const Duration(seconds: 0);
+
   @override
   void initState() {
     super.initState();
@@ -122,14 +124,15 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
               valueListenable: _heightNotifier,
               builder: (context, value, _) => LayoutBuilder(
                 builder: (context, constraints) {
-              
-                  // yt player maximized view
+                                    // yt player maximized view
                   if (value > _miniplayerViewTransitionPoint) {
 
                     if (!_isMaxPlayerControllerInit || (widget.activeVideo.videoId != _prevActiveVideoId)) {
                       _isMaxPlayerControllerInit = true;
                       _isMinPlayerControllerInit = false;
                       _prevActiveVideoId = widget.activeVideo.videoId!;
+
+                      _playedDuration = _ytPlayerController.value.position;
 
                       _ytPlayerController = YoutubePlayerController(
                         initialVideoId: widget.activeVideo.videoId!,
@@ -147,6 +150,7 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                       child: YoutubePlayerMaximizedView(
                         activeVideo: widget.activeVideo,
                         ytPlayerController: _ytPlayerController,
+                        startAt: _playedDuration,
                         suggestionVideosList: widget.suggestionVideosList,
                         dragStartCallback: _dragStartEventhandler,
                         dragUpdateCallback: _dragUpdateEventHandler,
@@ -157,12 +161,13 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                       
                   // yt player minimized view
                   else {
+                    
                     if (!_isMinPlayerControllerInit || (widget.activeVideo.videoId != _prevActiveVideoId)) {
                       _isMaxPlayerControllerInit = false;
                       _isMinPlayerControllerInit = true;
                       _prevActiveVideoId = widget.activeVideo.videoId!;
 
-                      //_ytPlayerController.dispose();
+                      _playedDuration = _ytPlayerController.value.position;
 
                       _ytPlayerController = YoutubePlayerController(
                         initialVideoId: widget.activeVideo.videoId!,
@@ -170,6 +175,7 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                           autoPlay: false,
                           mute: false,
                           hideControls: true,
+                          enableCaption: false,
                         ),
                       );
                     }
@@ -186,6 +192,7 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                             child: YoutubePlayerMinimizedView(
                               activeVideo: widget.activeVideo,
                               controller: _ytPlayerController,
+                              startAt: _playedDuration,
                               playerWidth: _widthNotifier.value,
                               closeVideo: _closeActiveVideo,
                             ),
@@ -268,22 +275,6 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
   void didUpdateWidget(covariant YoutubePlayerPage oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    //if (oldWidget.activeVideo.videoId != widget.activeVideo.videoId) {
-
-    //  print('Player transitioning to new video ${widget.activeVideo.videoId!}');
-
-    //  _ytPlayerController.dispose();
-
-    //  _ytPlayerController = YoutubePlayerController(
-    //    initialVideoId: widget.activeVideo.videoId!,
-    //    flags: const YoutubePlayerFlags(
-    //      autoPlay: true,
-    //      mute: false,
-    //    ),
-    //  );
-
-    //  _loadVideo();
-    //} else 
     if (!_playingVideo) {
       _loadVideo();
     }

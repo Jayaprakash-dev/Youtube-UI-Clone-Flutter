@@ -16,6 +16,8 @@ class YoutubePlayerMaximizedView extends StatefulWidget {
 
   final VideoEntity activeVideo;
   final YoutubePlayerController ytPlayerController;
+  final Duration startAt;
+
   final Future<DataState<List<VideoEntity>>> suggestionVideosList;
 
   // callbacks
@@ -27,6 +29,7 @@ class YoutubePlayerMaximizedView extends StatefulWidget {
     super.key,
     required this.activeVideo,
     required this.ytPlayerController,
+    required this.startAt,
     required this.suggestionVideosList,
     required this.dragStartCallback,
     required this.dragUpdateCallback,
@@ -59,6 +62,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
             children: [
               YoutubePlayerWrapper(
                 controller: widget.ytPlayerController,
+                startAt: widget.startAt,
               ),
               GestureDetector(
                 behavior: HitTestBehavior.translucent,

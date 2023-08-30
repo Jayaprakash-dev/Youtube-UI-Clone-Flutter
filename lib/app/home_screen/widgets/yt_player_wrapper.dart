@@ -4,10 +4,12 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class YoutubePlayerWrapper extends StatefulWidget {
 
   final YoutubePlayerController controller;
+  final Duration startAt;
 
   const YoutubePlayerWrapper({
     super.key,
     required this.controller,
+    required this.startAt,
   });
 
   @override
@@ -29,7 +31,10 @@ class _YoutubePlayerWrapperState extends State<YoutubePlayerWrapper> {
         handleColor: Colors.redAccent,
       ),
       // ignore: avoid_print
-      onReady: () => print('player ready'),
+      onReady: () {
+        print('player ready');
+        widget.controller.seekTo(widget.startAt);
+      },
     );
   }
 }
