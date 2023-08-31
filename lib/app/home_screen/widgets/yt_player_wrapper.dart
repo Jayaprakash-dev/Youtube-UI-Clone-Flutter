@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class YoutubePlayerWrapper extends StatefulWidget {
+class YoutubePlayerWrapper extends StatelessWidget {
 
   final YoutubePlayerController controller;
-  final Duration startAt;
 
   const YoutubePlayerWrapper({
     super.key,
     required this.controller,
-    required this.startAt,
   });
-
-  @override
-  State<YoutubePlayerWrapper> createState() => _YoutubePlayerWrapperState();
-}
-
-class _YoutubePlayerWrapperState extends State<YoutubePlayerWrapper> {
-
+  
   @override
   Widget build(BuildContext context) {
 
     return YoutubePlayer(
-      key: ObjectKey(widget.controller.hashCode),
-      controller: widget.controller,
+      key: Key(controller.initialVideoId),
+      controller: controller,
       showVideoProgressIndicator: true,
       progressIndicatorColor: Colors.red,
       progressColors: const ProgressBarColors(
@@ -33,7 +25,6 @@ class _YoutubePlayerWrapperState extends State<YoutubePlayerWrapper> {
       // ignore: avoid_print
       onReady: () {
         print('player ready');
-        widget.controller.seekTo(widget.startAt);
       },
     );
   }

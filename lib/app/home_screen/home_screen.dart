@@ -67,7 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: HomePage(videosList: state.videos!, isRebuildReq: false)
                 ),
                 YoutubePlayerPage(
-                  activeVideo: (state as HomeVideoPlayer).activeVideo,
+                  key: Key((state as HomeVideoPlayer).activeVideo.videoId!),
+                  activeVideo: state.activeVideo,
                   maxWidth: MediaQuery.of(context).size.width,
                   maxHeight: MediaQuery.of(context).size.height,
                   suggestionVideosList: state.suggestionVideosList,

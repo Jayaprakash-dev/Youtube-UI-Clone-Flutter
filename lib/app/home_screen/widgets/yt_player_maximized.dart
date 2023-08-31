@@ -16,7 +16,6 @@ class YoutubePlayerMaximizedView extends StatefulWidget {
 
   final VideoEntity activeVideo;
   final YoutubePlayerController ytPlayerController;
-  final Duration startAt;
 
   final Future<DataState<List<VideoEntity>>> suggestionVideosList;
 
@@ -29,7 +28,6 @@ class YoutubePlayerMaximizedView extends StatefulWidget {
     super.key,
     required this.activeVideo,
     required this.ytPlayerController,
-    required this.startAt,
     required this.suggestionVideosList,
     required this.dragStartCallback,
     required this.dragUpdateCallback,
@@ -62,7 +60,6 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
             children: [
               YoutubePlayerWrapper(
                 controller: widget.ytPlayerController,
-                startAt: widget.startAt,
               ),
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
@@ -252,7 +249,7 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                     const SizedBox(height: 10.0,),
                     // channel info wrapper
                     Padding(
-                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                      padding: const EdgeInsets.only(left: 15.0, right: 10.0),
                       child: Row(
                         children: [
                           // channel thumbnail future builder
@@ -504,13 +501,6 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                         ),
                       ),
                     ),
-                    // suggestion videos wrapper widget
-                    //ListView.builder(
-                    //  shrinkWrap: true,
-                    //  physics: const NeverScrollableScrollPhysics(),
-                    //  itemCount: widget.suggestionVideosList.length,
-                    //  itemBuilder: (context, index) => YtVideoListTile(video: widget.suggestionVideosList[index]),
-                    //),
                   ],
                 ),
               ),

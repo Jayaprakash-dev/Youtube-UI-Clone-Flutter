@@ -38,8 +38,6 @@ class VideoEntity extends Equatable {
   @Backlink()
   final ToMany<VideoThumbnail> thumbnails = ToMany<VideoThumbnail>();
 
-  Map<String, int>? _dateDiff;
-
   VideoEntity({
     this.id = 0,
     this.videoId,
@@ -54,116 +52,35 @@ class VideoEntity extends Equatable {
     this.tags,
   });
 
-  Map<String, int> get publishedDateDiff {
-    if (_dateDiff != null) return _dateDiff!;
-
-    int publishedYear = publishedAt!.year;
-    int publishedMonth = publishedAt!.month;
-    int publishedDay = publishedAt!.day;
-    
-    DateTime currentDate = DateTime.now();
-    int currentYear = currentDate.year;
-    int currentMonth = currentDate.month;
-    int currentDay = currentDate.day;
-
-    int yearsDiff = currentYear - publishedYear;
-
-    if (publishedMonth == DateTime.february && publishedDay > 27) {
-      publishedMonth++;
-    } else if (publishedDay >= 30) {
-      publishedMonth++;
-    }
-
-    int numOfDays = 0;
-    int numOfMonths = 0;
-    int numOfHours = 0;
-    int numOfMins = 0;
-    int numOfSecs = 0;
-    
-    int start = publishedMonth;
-    int end = currentMonth;
-    while (start < end || publishedYear != currentYear) {
-
-      if (start == 2) {
-        if (isLeafyear(publishedYear)) {
-          numOfDays += 29;
-        } else {
-          numOfDays += 28;
-        }
-      } else if (start % 2 != 0) {
-          numOfDays += 31;
-      } else {
-        numOfDays += 30;
-      }
-
-      numOfMonths++;
-      start++;
-
-      if (start == 13) {
-        start = 0;
-        publishedYear++;
-      }
-    }
-
-    // if numOfDay == 0, then current month == published month && current year == published year
-    if (numOfDays == 0) {
-      numOfDays = currentDay - publishedDay;
-    }
-
-    if (numOfDays == 0) {
-      numOfHours = currentDate.toLocal().hour - publishedAt!.toLocal().hour;
-      numOfMins = currentDate.toLocal().minute - publishedAt!.toLocal().minute;
-      numOfSecs = currentDate.toLocal().second - publishedAt!.toLocal().second;
-    }
-
-    _dateDiff = {
-      'yearsDiff': yearsDiff,
-      'monthsDiff': numOfMonths,
-      'daysDiff': numOfDays,
-      'hoursDiff': numOfHours,
-      'minsDiff': numOfMins,
-      'secsDiff': numOfSecs,
-    };
-
-    return _dateDiff!;
-  }
-
-  bool isLeafyear(int year) {
-    if ( (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0) ) return true;
-    return false;
-  }
-
   String formatPublishedDate() {
 
-    final Map<String, dynamic> publishedDateDiff = this.publishedDateDiff;
+    Duration durationDiff = DateTime.now().difference(publishedAt!);
 
-    int yearsDiff = publishedDateDiff['yearsDiff']!;
-    int monthsDiff = publishedDateDiff['monthsDiff']!;
-    int daysDiff = publishedDateDiff['daysDiff']!;
+    int secsDiff = durationDiff.inSeconds;
+    if (secsDiff > 0 && secsDiff < 60) {
+      return secsDiff == 1 ? '1 second ago' : '$secsDiff seconds ago';
+    }
+
+    int minsDiff = durationDiff.inMinutes;
+    if (minsDiff > 0 && minsDiff < 60) {
+      return minsDiff == 1 ? '1 minute ago' : '$minsDiff minutes ago';
+    }
     
-    if (daysDiff == 0) {
-      int hoursDiff = publishedDateDiff['hoursDiff']!;
-      if (hoursDiff > 0) {
+    int hoursDiff = durationDiff.inHours;
+    if (hoursDiff > 0 && hoursDiff < 24) {
         return hoursDiff == 1 ? '1 hour ago' : '$hoursDiff hours ago';
-      }
-
-      int minsDiff = publishedDateDiff['minsDiff']!;
-      if (minsDiff > 0) {
-        return minsDiff == 1 ? '1 minute ago' : '$minsDiff minutes ago';
-      }
-
-      int secsDiff = publishedDateDiff['secsDiff']!;
-      if (secsDiff > 0) {
-        return secsDiff == 1 ? '1 second ago' : '$secsDiff seconds ago';
-      }
     }
 
-    if (yearsDiff > 0) {
-      return yearsDiff == 1 ? '1 year ago' : '$yearsDiff years ago';
+    int daysDiff = durationDiff.inDays;
+
+    if (daysDiff >= 365) {
+      int yearsDiff = daysDiff ~/ 365;
+      return (daysDiff == 365 || daysDiff == 366)? '1 year ago' : '$yearsDiff years ago';
     }
     
-    if (monthsDiff > 0) {
-      return monthsDiff == 1 ? '1 month ago' : '$monthsDiff months ago';
+    if (daysDiff > 29) {
+      int monthsDiff = daysDiff ~/ 30.417;
+      return (daysDiff == 30 || daysDiff == 31) ? '1 month ago' : '$monthsDiff months ago';
     }
 
     if (daysDiff < 7) {

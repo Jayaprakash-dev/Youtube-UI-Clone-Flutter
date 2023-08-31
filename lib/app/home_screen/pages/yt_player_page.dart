@@ -55,23 +55,9 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
 
   bool _playingVideo = true;
 
-  late String _prevActiveVideoId;
-
-  /// `YoutubePlayerController` lacks a dynamic control for changing player controls visibility.
-  /// To manage the visibility of controls in this scenario,
-  /// there needs to be two conditional statements to control the creation of a new `YoutubePlayerController` instance
-  /// based on the view.
-  late bool _isMaxPlayerControllerInit, _isMinPlayerControllerInit;
-
-  Duration _playedDuration = const Duration(seconds: 0);
-
   @override
   void initState() {
     super.initState();
-
-    _isMaxPlayerControllerInit = true;
-    _isMinPlayerControllerInit = false;
-    _prevActiveVideoId = widget.activeVideo.videoId!;
 
     _ytPlayerController = YoutubePlayerController(
       initialVideoId: widget.activeVideo.videoId!,
@@ -127,22 +113,6 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                                     // yt player maximized view
                   if (value > _miniplayerViewTransitionPoint) {
 
-                    if (!_isMaxPlayerControllerInit || (widget.activeVideo.videoId != _prevActiveVideoId)) {
-                      _isMaxPlayerControllerInit = true;
-                      _isMinPlayerControllerInit = false;
-                      _prevActiveVideoId = widget.activeVideo.videoId!;
-
-                      _playedDuration = _ytPlayerController.value.position;
-
-                      _ytPlayerController = YoutubePlayerController(
-                        initialVideoId: widget.activeVideo.videoId!,
-                        flags: const YoutubePlayerFlags(
-                          autoPlay: true,
-                          mute: false,
-                        ),
-                      );
-                    }
-
                     return Container(
                       color: const Color.fromRGBO(27, 28, 30, 1),
                       width: double.infinity,
@@ -150,7 +120,6 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                       child: YoutubePlayerMaximizedView(
                         activeVideo: widget.activeVideo,
                         ytPlayerController: _ytPlayerController,
-                        startAt: _playedDuration,
                         suggestionVideosList: widget.suggestionVideosList,
                         dragStartCallback: _dragStartEventhandler,
                         dragUpdateCallback: _dragUpdateEventHandler,
@@ -161,25 +130,6 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                       
                   // yt player minimized view
                   else {
-                    
-                    if (!_isMinPlayerControllerInit || (widget.activeVideo.videoId != _prevActiveVideoId)) {
-                      _isMaxPlayerControllerInit = false;
-                      _isMinPlayerControllerInit = true;
-                      _prevActiveVideoId = widget.activeVideo.videoId!;
-
-                      _playedDuration = _ytPlayerController.value.position;
-
-                      _ytPlayerController = YoutubePlayerController(
-                        initialVideoId: widget.activeVideo.videoId!,
-                        flags: const YoutubePlayerFlags(
-                          autoPlay: false,
-                          mute: false,
-                          hideControls: true,
-                          enableCaption: false,
-                        ),
-                      );
-                    }
-
                     return ValueListenableBuilder(
                       valueListenable: _widthNotifier,
                       child: _bottomNavBarWidget,
@@ -192,7 +142,6 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                             child: YoutubePlayerMinimizedView(
                               activeVideo: widget.activeVideo,
                               controller: _ytPlayerController,
-                              startAt: _playedDuration,
                               playerWidth: _widthNotifier.value,
                               closeVideo: _closeActiveVideo,
                             ),
@@ -276,6 +225,7 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
     super.didUpdateWidget(oldWidget);
 
     if (!_playingVideo) {
+      print('same videoID');
       _loadVideo();
     }
   }

@@ -8,7 +8,6 @@ class YoutubePlayerMinimizedView extends StatefulWidget {
   
   final VideoEntity activeVideo;
   final YoutubePlayerController controller;
-  final Duration startAt;
 
   double playerWidth;
 
@@ -19,7 +18,6 @@ class YoutubePlayerMinimizedView extends StatefulWidget {
     super.key,
     required this.activeVideo,
     required this.controller,
-    required this.startAt,
     required this.playerWidth,
     required this.closeVideo,
   });
@@ -30,7 +28,13 @@ class YoutubePlayerMinimizedView extends StatefulWidget {
 
 class _YoutubePlayerMinimizedViewState extends State<YoutubePlayerMinimizedView> {
 
-  late bool _playing = true;
+  late bool _isPlaying;
+
+  @override
+  void initState() {
+    super.initState();
+    _isPlaying = widget.controller.value.isPlaying;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,6 @@ class _YoutubePlayerMinimizedViewState extends State<YoutubePlayerMinimizedView>
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(13), bottomLeft: Radius.circular(13)),
               child: YoutubePlayerWrapper(
                 controller: widget.controller,
-                startAt: widget.startAt,
               ),
             ),
           ),
@@ -98,7 +101,7 @@ class _YoutubePlayerMinimizedViewState extends State<YoutubePlayerMinimizedView>
                   // manages play/pause in minimized view
                   GestureDetector(
                     onTap: playPauseClickHandler,
-                    child: Icon( _playing ? Icons.pause_rounded : Icons.play_arrow_rounded, color: Colors.white, size: 30)
+                    child: Icon( _isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded, color: Colors.white, size: 30)
                   ),
                   const SizedBox(width: 5),
                   GestureDetector(
@@ -115,12 +118,12 @@ class _YoutubePlayerMinimizedViewState extends State<YoutubePlayerMinimizedView>
   }
 
   void playPauseClickHandler() {
-    if (_playing) {
+    if (_isPlaying) {
       widget.controller.pause();
-      setState(() { _playing = false; });
+      setState(() { _isPlaying = false; });
     } else {
       widget.controller.play();
-      setState(() { _playing = true; });
+      setState(() { _isPlaying = true; });
     }
   }
 }
