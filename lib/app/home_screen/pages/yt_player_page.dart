@@ -110,7 +110,8 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
               valueListenable: _heightNotifier,
               builder: (context, value, _) => LayoutBuilder(
                 builder: (context, constraints) {
-                                    // yt player maximized view
+                  
+                  // yt player maximized view
                   if (value > _miniplayerViewTransitionPoint) {
 
                     return Container(
@@ -225,7 +226,6 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
     super.didUpdateWidget(oldWidget);
 
     if (!_playingVideo) {
-      print('same videoID');
       _loadVideo();
     }
   }
