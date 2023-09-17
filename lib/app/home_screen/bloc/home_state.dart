@@ -35,6 +35,9 @@ class HomeVideoPlayer extends HomeState {
     required this.suggestionVideosList,
     required Future<DataState<List<VideoEntity>>> videosList,
   }): super(videos: videosList);
+
+  @override
+  List<Object?> get props => [ activeVideo.videoId ];
 }
 
 // navigation states

@@ -42,14 +42,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   FutureOr<void> navigateToYtPlayerHandler(NavigateToYtPlayer event, Emitter<HomeState> emit) async {
-    final Future<DataState<List<VideoEntity>>> localDbData = getLocalYtVideoUseCase();
+    //final Future<DataState<List<VideoEntity>>> localDbData = getLocalYtVideoUseCase();
     final Future<DataState<List<VideoEntity>>> suggestionVideosData = getYtCategoryVideos(categoryId: event.videoCategorgId);
 
     emit(
       HomeVideoPlayer(
         activeVideo: event.activeVideo,
         suggestionVideosList: suggestionVideosData,
-        videosList: localDbData,
+        videosList: state.videos!,
       )
     );
   }
