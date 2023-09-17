@@ -5,6 +5,8 @@ sealed class HomeEvent {}
 
 class AppStarted extends HomeEvent {}
 
+class HomeLoadEvent extends HomeEvent {}
+
 class HomeErrorEvent extends HomeEvent {
   final Exception error;
 

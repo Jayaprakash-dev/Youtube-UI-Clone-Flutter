@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           case HomeSuccessState:
             return RefreshIndicator(
-              onRefresh: () async => BlocProvider.of<HomeBloc>(context).add(AppStarted()),
+              onRefresh: () async => BlocProvider.of<HomeBloc>(context).add(HomeLoadEvent()),
               edgeOffset: 60.h,
               backgroundColor: Colors.black,
               child: Stack(
@@ -61,23 +61,44 @@ class _HomeScreenState extends State<HomeScreen> {
             return Stack(
               children: [
                 RefreshIndicator(
-                  onRefresh: () async => BlocProvider.of<HomeBloc>(context).add(AppStarted()),
+                  onRefresh: () async => BlocProvider.of<HomeBloc>(context).add(HomeLoadEvent()),
                   edgeOffset: 60.h,
                   backgroundColor: Colors.black,
-                  child: HomePage(videosList: state.videos!, isRebuildReq: false)
+                  child: HomePage(videosList: state.videos!)
                 ),
                 YoutubePlayerPage(
                   key: Key((state as HomeVideoPlayer).activeVideo.videoId!),
                   activeVideo: state.activeVideo,
                   maxWidth: MediaQuery.of(context).size.width,
                   maxHeight: MediaQuery.of(context).size.height,
-                  suggestionVideosList: state.suggestionVideosList,
+                  getRecommendedVideosCallback: state.getRecommendedVideosCallback,
                 ),
               ],
             );
           default:
-            return const Center(
-              child: CircularProgressIndicator(color: Colors.red),
+            return CustomScrollView(
+              slivers: [
+                const CustomAppBar(),
+                SliverFillRemaining(
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Something went wrong', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.white)),
+                            TextButton(
+                              onPressed: () => BlocProvider.of<HomeBloc>(context).add(HomeLoadEvent()), 
+                              child: const Text('Retry', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const BottomNavBar(index: 0)
+                    ],
+                  ),
+                  ),
+              ],
             );
         }
       },

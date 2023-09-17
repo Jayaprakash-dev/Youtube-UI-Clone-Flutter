@@ -2,7 +2,7 @@ part of 'home_bloc.dart';
 
 abstract class HomeState extends Equatable {
 
-  final Future<DataState<List<VideoEntity>>>? videos;
+  final List<VideoEntity>? videos;
   final Exception? exception;
 
   const HomeState({
@@ -14,12 +14,10 @@ abstract class HomeState extends Equatable {
   List<Object?> get props => [videos, exception];
 }
 
-class HomeLoadingState extends HomeState {
-  const HomeLoadingState();
-}
+class HomeLoadingState extends HomeState {}
 
 class HomeSuccessState extends HomeState {
-  const HomeSuccessState({required Future<DataState<List<VideoEntity>>> videos}): super(videos: videos);
+  const HomeSuccessState({required List<VideoEntity> videos}): super(videos: videos);
 }
 
 class HomeErrorState extends HomeState {
@@ -28,12 +26,12 @@ class HomeErrorState extends HomeState {
 
 class HomeVideoPlayer extends HomeState {
   final VideoEntity activeVideo;
-  final Future<DataState<List<VideoEntity>>> suggestionVideosList;
+  final UseCase getRecommendedVideosCallback;
 
   const HomeVideoPlayer({
     required this.activeVideo,
-    required this.suggestionVideosList,
-    required Future<DataState<List<VideoEntity>>> videosList,
+    required this.getRecommendedVideosCallback,
+    required List<VideoEntity> videosList,
   }): super(videos: videosList);
 
   @override
