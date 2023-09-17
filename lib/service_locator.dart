@@ -79,8 +79,7 @@ void loadDependencies() {
   );
 
   // bloc objects
-  services.registerSingletonWithDependencies<HomeBloc>(
+  services.registerFactory<HomeBloc>(
     () => HomeBloc(getYTVideosUseCase: services(), getLocalYtVideoUseCase: services(), getYtCategoryVideos: services()),
-    dependsOn: [ GetYtVideosUseCase ]
   );
 }
