@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
           builder:(context, snapshot) {
             if (snapshot.hasData && snapshot.data is DataSuccess) {
               return YtVideosListViewWrapper(videosList: snapshot.data!.data!);
-            } else if (snapshot.hasData && snapshot.data is DataException) {
+            } else if ((snapshot.hasData && snapshot.data is DataException) || snapshot.hasError) {
               BlocProvider.of<HomeBloc>(context).add(HomeErrorEvent(error: snapshot.data!.error!));
               return const SliverFillRemaining(child: Center(child: CircularProgressIndicator(color: Colors.red)));
             } else {
