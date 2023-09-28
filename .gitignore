@@ -88,4 +88,4 @@ ios/Runner.xcconfig
 # Exclude .idea/codeStyles
 .idea/codeStyles/
 
-demo/
+demo/videos/

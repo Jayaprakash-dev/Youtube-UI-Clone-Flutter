@@ -26,21 +26,21 @@ https://github.com/Jayaprakash-dev/Youtube-UI-Clone-Flutter/assets/68953739/738b
 <div style="display: flex; flex-direction: row; justify-content: space-around">
 	<div>
 		<h3>Home page</h3>
-		<img src="demo/Screenshot%202023-09-28%20at%204.33.03%20PM.png" alt="drawing" width="400"/>
+		<img src="demo/img/Screenshot%202023-09-28%20at%204.33.03%20PM.png" alt="drawing" width="400"/>
 	</div>
 	<div>
 		<h3>Youtube video player page</h3>
-		<img src="demo/Screenshot 2023-09-28 at 4.33.33 PM.png" alt="drawing" width="400"/>
+		<img src="demo/img/Screenshot 2023-09-28 at 4.33.33 PM.png" alt="drawing" width="400"/>
 	</div>
 </div>
 
 <div style="margin-top: 50px;display: flex; flex-direction: row; justify-content: space-around">
 	<div>
 		<h3>Youtube video player page</h3>
-		<img src="demo/Screenshot 2023-09-28 at 4.33.39 PM.png" alt="drawing" width="400"/>
+		<img src="demo/img/Screenshot 2023-09-28 at 4.33.39 PM.png" alt="drawing" width="400"/>
 	</div>
 	<div>
 		<h3>YT Miniplayer</h3>
-		<img src="demo/Screenshot 2023-09-28 at 4.34.04 PM.png" alt="drawing" width="400"/>
+		<img src="demo/img/Screenshot 2023-09-28 at 4.34.04 PM.png" alt="drawing" width="400"/>
 	</div>
 </div>
