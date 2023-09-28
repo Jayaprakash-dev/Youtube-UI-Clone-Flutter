@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   activeVideo: state.activeVideo,
                   maxWidth: MediaQuery.of(context).size.width,
                   maxHeight: MediaQuery.of(context).size.height,
-                  getRecommendedVideosCallback: state.getRecommendedVideosCallback,
+                  recommendationVideos: state.recommendationVideos,
                 ),
               ],
             );

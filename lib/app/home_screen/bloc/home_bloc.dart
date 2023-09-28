@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:yt_ui_clone/core/data/data_state.dart';
-import 'package:yt_ui_clone/core/usecase/usecase.dart';
 import 'package:yt_ui_clone/domain/entities/video_entities/video.dart';
 import 'package:yt_ui_clone/domain/usecases/get_local_yt_video.dart';
 import 'package:yt_ui_clone/domain/usecases/get_yt_category_videos.dart';
@@ -51,12 +50,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> navigateToYtPlayerHandler(NavigateToYtPlayer event, Emitter<HomeState> emit) async {
     //final Future<DataState<List<VideoEntity>>> localDbData = getLocalYtVideoUseCase();
-    //final Future<DataState<List<VideoEntity>>> suggestionVideosData = getYtCategoryVideos(categoryId: event.videoCategorgId);
+    final Future<DataState<List<VideoEntity>>> recommendationVideosData = getYtCategoryVideos(categoryId: event.videoCategorgId);
 
     emit(
       HomeVideoPlayer(
         activeVideo: event.activeVideo,
-        getRecommendedVideosCallback: getYtCategoryVideos,
+        recommendationVideos: recommendationVideosData,
         videosList: state.videos!,
       )
     );

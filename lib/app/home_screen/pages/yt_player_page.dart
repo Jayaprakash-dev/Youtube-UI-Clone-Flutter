@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:yt_ui_clone/app/global/widgets/bottom_nav_bar.dart';
 import 'package:yt_ui_clone/app/home_screen/widgets/yt_player_maximized.dart';
-import 'package:yt_ui_clone/core/usecase/usecase.dart';
+import 'package:yt_ui_clone/core/data/data_state.dart';
 import 'package:yt_ui_clone/domain/entities/video_entities/video.dart';
 
 import '../widgets/yt_player_minimized.dart';
@@ -15,16 +15,14 @@ class YoutubePlayerPage extends StatefulWidget {
   final VideoEntity activeVideo;
   final double maxWidth;
   final double maxHeight;
-
-  // callback
-  final UseCase getRecommendedVideosCallback;
+  final Future<DataState<List<VideoEntity>>>  recommendationVideos;
 
   const YoutubePlayerPage({
     super.key,
     required this.activeVideo,
     required this.maxWidth,
     required this.maxHeight,
-    required this.getRecommendedVideosCallback,
+    required this.recommendationVideos,
   });
 
   @override
@@ -123,7 +121,7 @@ class _YoutubePlayerPageState extends State<YoutubePlayerPage> with TickerProvid
                       child: YoutubePlayerMaximizedView(
                         activeVideo: widget.activeVideo,
                         ytPlayerController: _ytPlayerController,
-                        getRecommendedVideosCallback: widget.getRecommendedVideosCallback,
+                        recommendationVideos: widget.recommendationVideos,
                         dragStartCallback: _dragStartEventhandler,
                         dragUpdateCallback: _dragUpdateEventHandler,
                         dragEndCallback: _dragEndEventHandler,

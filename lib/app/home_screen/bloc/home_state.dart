@@ -26,11 +26,11 @@ class HomeErrorState extends HomeState {
 
 class HomeVideoPlayer extends HomeState {
   final VideoEntity activeVideo;
-  final UseCase getRecommendedVideosCallback;
+  final Future<DataState<List<VideoEntity>>> recommendationVideos;
 
   const HomeVideoPlayer({
     required this.activeVideo,
-    required this.getRecommendedVideosCallback,
+    required this.recommendationVideos,
     required List<VideoEntity> videosList,
   }): super(videos: videosList);
 

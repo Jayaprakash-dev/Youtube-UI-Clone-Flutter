@@ -9,7 +9,6 @@ import 'package:yt_ui_clone/app/home_screen/bloc/home_bloc.dart';
 import 'package:yt_ui_clone/app/home_screen/widgets/yt_player_wrapper.dart';
 import 'package:yt_ui_clone/app/home_screen/widgets/yt_videos_list_view.dart';
 import 'package:yt_ui_clone/core/data/data_state.dart';
-import 'package:yt_ui_clone/core/usecase/usecase.dart';
 import 'package:yt_ui_clone/domain/entities/video_entities/video.dart';
 
 
@@ -17,9 +16,9 @@ class YoutubePlayerMaximizedView extends StatefulWidget {
 
   final VideoEntity activeVideo;
   final YoutubePlayerController ytPlayerController;
+  final Future<DataState<List<VideoEntity>>> recommendationVideos;
 
   // callbacks
-  final UseCase getRecommendedVideosCallback;
   final void Function(DragStartDetails details) dragStartCallback;
   final void Function(DragUpdateDetails details) dragUpdateCallback;
   final void Function(DragEndDetails details) dragEndCallback;
@@ -28,7 +27,7 @@ class YoutubePlayerMaximizedView extends StatefulWidget {
     super.key,
     required this.activeVideo,
     required this.ytPlayerController,
-    required this.getRecommendedVideosCallback,
+    required this.recommendationVideos,
     required this.dragStartCallback,
     required this.dragUpdateCallback,
     required this.dragEndCallback,
@@ -497,7 +496,8 @@ class _YoutubePlayerMaximizedViewState extends State<YoutubePlayerMaximizedView>
                 ),
               ),
               FutureBuilder(
-                future: widget.getRecommendedVideosCallback(categoryId: widget.activeVideo.categoryId),
+                key: ObjectKey(widget.recommendationVideos.hashCode),
+                future: widget.recommendationVideos,
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data is DataSuccess) {
                     return YtVideosListViewWrapper(videosList: snapshot.data!.data!);
